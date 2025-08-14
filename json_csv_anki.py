@@ -27,13 +27,14 @@ def json_to_csv(json_path):
 
         for item in data:
             # Construir etiquetas
-            etiquetas = ""
-            if item.get("level") and item.get("part_of_speech"):
-                etiquetas = f"{item['level']} {item['part_of_speech']}"
-            elif item.get("level"):
-                etiquetas = item['level']
-            elif item.get("part_of_speech"):
-                etiquetas = item['part_of_speech']
+            etiquetas_parts = []
+            if item.get("level"):
+                etiquetas_parts.append(item["level"])
+            if item.get("part_of_speech"):
+                etiquetas_parts.append(item["part_of_speech"])
+            if item.get("semantic_category"):
+                etiquetas_parts.append(item["semantic_category"])
+            etiquetas = " ".join(etiquetas_parts)
 
             writer.writerow([
                 item.get("id", ""),              # 1 - ID
